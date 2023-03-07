@@ -1,16 +1,16 @@
-const traverse = require('./traverse')
-module.expports = function transformer(originalAST) {
+const traverse = require('./traverse');
+module.exports = function transformer(originalAST) {
     const jsAST = {
         type: 'Program',
         body: []
     };
 
     let position = jsAST.body;
-    
-    traverse(originalAST,{
+
+    traverse(originalAST, {
         NumberLiteral(node) {
             position.push({
-                type: 'NumbericLiteral',
+                type: 'NumericLiteral',
                 value: node.value
             });
         },
@@ -18,8 +18,8 @@ module.expports = function transformer(originalAST) {
             let expression = {
                 type: 'CallExpression',
                 callee: {
-                    type:'Identifier',
-                    name:node.name
+                    type: 'Identifier',
+                    name: node.name
                 },
                 arguments: []
             };
@@ -34,5 +34,6 @@ module.expports = function transformer(originalAST) {
             prevPosition.push(expression);
         }
     });
+
     return jsAST;
 }
